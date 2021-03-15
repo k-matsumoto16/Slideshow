@@ -43,12 +43,32 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         imageView.image = imageArrey[nowIndex]
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // segueから遷移先のResultViewControllerを取得する
         let resultViewController:SlideViewController = segue.destination as! SlideViewController
         resultViewController.image = imageArrey[nowIndex]
+        
+        if self.timer == nil {
+            imageView.image = imageArrey[nowIndex]
+            
+        }else{
+            //タイマーを停止
+            self.timer.invalidate()
+            
+            //タイマーを削除
+            self.timer = nil
+            
+            // ボタンの名前を再生に変える
+            slideButton.setTitle("再生", for: .normal)
+            
+            //次へ・戻るボタンを有効化
+            nextSlideButton.isEnabled = true
+            backSlideButton.isEnabled = true
+            
+        }
     }
     
     //再生ボタン押下時の処理
@@ -76,7 +96,7 @@ class ViewController: UIViewController {
             //次へ・戻るボタンを有効化
             nextSlideButton.isEnabled = true
             backSlideButton.isEnabled = true
-
+            
         }
     }
     @objc func changeImage(){
@@ -90,7 +110,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func unwind(_ segue: UIStoryboardSegue) {
-            // 他の画面から segue を使って戻ってきた時に呼ばれる
-        }
+        // 他の画面から segue を使って戻ってきた時に呼ばれる
+    }
 }
 
