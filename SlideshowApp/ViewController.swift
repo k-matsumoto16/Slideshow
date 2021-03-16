@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var backSlideButton: UIButton!
     
     //タイマー
-    var timer: Timer!
+    var timer: Timer?
     
     //配列指定
     var nowIndex: Int = 0
@@ -51,24 +51,19 @@ class ViewController: UIViewController {
         let resultViewController:SlideViewController = segue.destination as! SlideViewController
         resultViewController.image = imageArrey[nowIndex]
         
-        if self.timer == nil {
-            imageView.image = imageArrey[nowIndex]
-            
-        }else{
-            //タイマーを停止
-            self.timer.invalidate()
-            
-            //タイマーを削除
-            self.timer = nil
+        if let value = timer {
+            value.invalidate()
             
             // ボタンの名前を再生に変える
             slideButton.setTitle("再生", for: .normal)
-            
             //次へ・戻るボタンを有効化
             nextSlideButton.isEnabled = true
             backSlideButton.isEnabled = true
             
+        }else{
+            imageView.image = imageArrey[nowIndex]
         }
+        
     }
     
     //再生ボタン押下時の処理
@@ -86,7 +81,7 @@ class ViewController: UIViewController {
             
         }else{
             //タイマーを停止
-            self.timer.invalidate()
+            self.timer?.invalidate()
             
             //タイマーを削除
             self.timer = nil
